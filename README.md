@@ -1,4 +1,22 @@
-# CentralIA
+<h1 align="center">🤖 CentralIA</h1>
+
+<p align="center"><strong>Atendimento omnichannel com IA para provedores de internet (ISP).</strong><br/>Classifica a intenção da conversa, responde com IA e <strong>escala para um humano</strong> quando necessário.</p>
+
+<p align="center">
+  <a href="https://central-ia-lac.vercel.app/login"><img src="https://img.shields.io/badge/demo-ao%20vivo-2ea44f?style=for-the-badge&logo=vercel&logoColor=white" alt="Demo ao vivo" /></a>
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redis%20%2F%20BullMQ-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+  <img src="https://img.shields.io/badge/WhatsApp%20Cloud%20API-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+  <img src="https://img.shields.io/badge/IA%20Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white" />
+</p>
+
+<p align="center">🔗 <strong>Ao vivo:</strong> https://central-ia-lac.vercel.app/login</p>
+
+---
+
 
 Plataforma de atendimento omnichannel para provedores de internet (ISP), com IA.
 
