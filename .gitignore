@@ -1,0 +1,66 @@
+# ===== Dependencies =====
+node_modules/
+**/node_modules/
+
+# ===== Environment / secrets — NUNCA commitar =====
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+*.pem
+*.key
+
+# ===== Builds =====
+.next/
+**/.next/
+.next-build/
+**/.next-build/
+out/
+**/out/
+dist/
+**/dist/
+build/
+**/build/
+
+# ===== Storage local / uploads (RUNTIME — não o código em src/) =====
+# Ancorado com "/" para NÃO afetar pastas de código como api/src/common/storage/.
+/api/storage/
+/api/uploads/
+/storage/
+/uploads/
+
+# ===== Logs / temporários =====
+*.log
+npm-debug.log*
+yarn-error.log*
+*.tmp
+*.temp
+.cache/
+
+# ===== Prisma local =====
+prisma/*.db
+**/prisma/*.db
+
+# ===== Testes / cobertura (relatórios — não o módulo api/src/modules/ai/coverage/) =====
+/coverage/
+/api/coverage/
+/web/coverage/
+
+# ===== Artefatos de sprint / piloto / screenshots (não versionar) =====
+_sprint*/
+_piloto*/
+_screenshots*/
+screenshots/
+*_logocheck.png
+
+# ===== OS / IDE =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# TypeScript build cache
+*.tsbuildinfo

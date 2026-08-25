@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: centralia-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: centralia
+      POSTGRES_PASSWORD: centralia
+      POSTGRES_DB: centralia
+    ports:
+      # Host 5544 → container 5432. Evita conflito com Postgres nativo do Windows
+      # (postgresql-x64-18) que ocupa a 5432. Ajuste DATABASE_URL para :5544.
+      - '5544:5432'
+    volumes:
+      - centralia-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U centralia']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: centralia-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - centralia-redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  centralia-pgdata:
+  centralia-redisdata:

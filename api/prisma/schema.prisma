@@ -1,0 +1,417 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Tenancy
+// ============================================================
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  document  String?
+  createdAt DateTime @default(now())
+
+  users     User[]
+  customers Customer[]
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  AGENT
+  FINANCIAL
+  SUPPORT
+  COMMERCIAL
+  SUPERVISOR // legado
+}
+
+model User {
+  id           String   @id @default(uuid())
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id])
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(AGENT)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  conversations Conversation[]
+  humanQueue    HumanQueue[]
+  presence      UserPresence?
+
+  @@index([companyId])
+}
+
+// ============================================================
+// Presença de atendentes (online/away/offline)
+// ============================================================
+enum PresenceStatus {
+  ONLINE
+  AWAY
+  OFFLINE
+}
+
+model UserPresence {
+  id         String         @id @default(uuid())
+  userId     String         @unique
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyId  String
+  status     PresenceStatus @default(OFFLINE)
+  lastSeenAt DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  @@index([companyId])
+}
+
+// ============================================================
+// Customers (espelho local da ISPBOX)
+// ============================================================
+model Customer {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  ispboxId  String?
+  name      String
+  cpfCnpj   String?
+  phone     String?
+  email     String?
+  createdAt DateTime @default(now())
+
+  services      CustomerService[]
+  conversations Conversation[]
+  tickets       Ticket[]
+
+  @@unique([companyId, ispboxId])
+  @@index([phone])
+  @@index([cpfCnpj])
+}
+
+model CustomerService {
+  id              String   @id @default(uuid())
+  customerId      String
+  customer        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ispboxServiceId String
+  type            String?
+  status          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([customerId])
+}
+
+// ============================================================
+// Conversations & Messages
+// ============================================================
+enum ConversationChannel {
+  WHATSAPP
+}
+
+enum ConversationStatus {
+  BOT // sendo conduzida pela IA
+  HUMAN // escalada para atendente humano
+  PENDING
+  CLOSED
+}
+
+model Conversation {
+  id             String              @id @default(uuid())
+  companyId      String?
+  customerId     String?
+  customer       Customer?           @relation(fields: [customerId], references: [id])
+  channel        ConversationChannel @default(WHATSAPP)
+  status         ConversationStatus  @default(BOT)
+  intent         String? // COMMERCIAL | SUPPORT | FINANCIAL | HUMAN (definido pela IA/FSM)
+  assignedUserId String?
+  assignedUser   User?               @relation(fields: [assignedUserId], references: [id])
+  contact        String? // wa_id / telefone do contato
+  lastMessageAt  DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  messages    Message[]
+  tickets     Ticket[]
+  attachments Attachment[]
+  humanQueue  HumanQueue[]
+  fsmState    ConversationState?
+  reads       ConversationRead[]
+
+  @@index([contact])
+  @@index([status])
+  @@index([companyId, lastMessageAt])
+}
+
+model ConversationRead {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  lastReadAt     DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+}
+
+enum MessageRole {
+  CUSTOMER
+  AGENT
+  AI
+  SYSTEM
+}
+
+// ============================================================
+// Máquina de estado da conversa (FSM) — habilitada por USE_FSM
+// ============================================================
+enum ConversationStateValue {
+  START
+  COMMERCIAL_SERVICE_SELECTION
+  COMMERCIAL_CEP
+  COMMERCIAL_COVERAGE_CHECK
+  COMMERCIAL_PLAN_PRESENTATION
+  COMMERCIAL_DATA_COLLECTION
+  COMMERCIAL_DOCUMENT_UPLOAD
+  COMMERCIAL_SUMMARY
+  SUPPORT_IDENTIFICATION
+  SUPPORT_SERVICE_LOOKUP
+  SUPPORT_STATUS_CHECK
+  SUPPORT_DIAGNOSIS
+  SUPPORT_VIDEO_REQUEST
+  SUPPORT_OS_CREATION
+  SUPPORT_SUMMARY
+  FINANCIAL_IDENTIFICATION
+  FINANCIAL_SERVICE_LOOKUP
+  FINANCIAL_BILLING
+  FINANCIAL_BILLING_LIST
+  FINANCIAL_PAYMENT_OPTIONS
+  FINANCIAL_SUMMARY
+  HUMAN_HANDOFF
+  FINISHED
+}
+
+model ConversationState {
+  id             String                 @id @default(uuid())
+  conversationId String                 @unique
+  conversation   Conversation           @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  state          ConversationStateValue @default(START)
+  collectedData  Json? // dados coletados por etapa (nome, cpf, cep, plano, ...)
+  missingFields  Json? // campos ainda pendentes (string[])
+  lastIntent     String?
+  confidence     Float?
+  historySummary String?
+  data           Json? // legado — mantido por compatibilidade
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           MessageRole
+  content        String
+  metadata       Json?
+  externalId     String?      @unique // id da mensagem na Meta (idempotência)
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+}
+
+model Attachment {
+  id              String       @id @default(uuid())
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  messageId       String?
+  url             String
+  type            String? // image | document | video | audio
+  mimeType        String?
+  filename        String?
+  storedName      String? // nome físico no storage (UUID + ext)
+  sizeBytes       Int?
+  provider        String? // local | mock | s3
+  providerMediaId String?
+  createdAt       DateTime     @default(now())
+
+  @@index([conversationId])
+  @@index([messageId])
+}
+
+// ============================================================
+// Tickets & Work Orders
+// ============================================================
+enum TicketType {
+  SUPPORT
+  COMMERCIAL
+  FINANCIAL
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model Ticket {
+  id             String        @id @default(uuid())
+  companyId      String?
+  customerId     String?
+  customer       Customer?     @relation(fields: [customerId], references: [id])
+  conversationId String?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  assignedUserId String?
+  type           TicketType    @default(SUPPORT)
+  status         TicketStatus  @default(OPEN)
+  summary        String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  events     TicketEvent[]
+  workOrders WorkOrder[]
+
+  @@index([status])
+}
+
+model TicketEvent {
+  id        String   @id @default(uuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  event     String
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  @@index([ticketId])
+}
+
+enum WorkOrderStatus {
+  PENDING
+  OPEN
+  CLOSED
+  ERROR
+}
+
+model WorkOrder {
+  id         String          @id @default(uuid())
+  ticketId   String
+  ticket     Ticket          @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  ispboxOsId String?
+  status     WorkOrderStatus @default(PENDING)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@index([ticketId])
+}
+
+// ============================================================
+// Knowledge base
+// ============================================================
+model KnowledgeArticle {
+  id        String   @id @default(uuid())
+  companyId String? // null = conteúdo compartilhado/global
+  category  String?
+  title     String
+  content   String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([category])
+  @@index([companyId])
+}
+
+// ============================================================
+// Observability / integrations
+// ============================================================
+enum IntegrationStatus {
+  SUCCESS
+  ERROR
+}
+
+model IntegrationLog {
+  id        String            @id @default(uuid())
+  provider  String
+  operation String
+  request   Json?
+  response  Json?
+  status    IntegrationStatus
+  createdAt DateTime          @default(now())
+
+  @@index([provider])
+  @@index([status])
+}
+
+model WebhookEvent {
+  id        String   @id @default(uuid())
+  provider  String
+  payload   Json
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([processed])
+}
+
+// ============================================================
+// Auditoria
+// ============================================================
+model AuditLog {
+  id         String   @id @default(uuid())
+  companyId  String?
+  actorType  String // system | user | agent | meta
+  actorId    String?
+  action     String // attachment.access | share_link.create | outbound.send | ...
+  entityType String?
+  entityId   String?
+  metadata   Json?
+  ip         String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([action])
+  @@index([entityType, entityId])
+}
+
+// ============================================================
+// Human escalation
+// ============================================================
+enum HumanQueueReason {
+  CLIENT_REQUEST
+  COMPLEX_SUPPORT
+  NEGOTIATION
+  API_ERROR
+  UNKNOWN_INTENT
+}
+
+enum HumanQueueStatus {
+  WAITING
+  ASSIGNED
+  RESOLVED
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model HumanQueue {
+  id              String           @id @default(uuid())
+  conversationId  String
+  conversation    Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  reason          HumanQueueReason
+  summary         String?
+  status          HumanQueueStatus @default(WAITING)
+  priority        Priority         @default(NORMAL)
+  dueAt           DateTime?
+  firstResponseAt DateTime?
+  resolvedAt      DateTime?
+  assignedUserId  String?
+  assignedUser    User?            @relation(fields: [assignedUserId], references: [id])
+  createdAt       DateTime         @default(now())
+
+  @@index([status])
+  @@index([dueAt])
+}

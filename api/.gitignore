@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+build/
+
+# Environment / credentials — NEVER commit
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Prisma
+prisma/*.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test (relatórios de cobertura — ancorado p/ NÃO ignorar src/modules/ai/coverage/)
+/coverage/

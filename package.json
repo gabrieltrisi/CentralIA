@@ -1,0 +1,14 @@
+{
+  "name": "centralia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CentralIA — orquestração de scripts (bootstrap, demo, seed)",
+  "scripts": {
+    "bootstrap": "bash scripts/bootstrap.sh",
+    "bootstrap:win": "powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1",
+    "demo": "npm --prefix api run demo",
+    "demo:all": "npm --prefix api run demo:all",
+    "seed": "npm --prefix api run prisma:seed",
+    "migrate": "npm --prefix api run prisma:deploy"
+  }
+}

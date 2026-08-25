@@ -1,0 +1,112 @@
+{
+  "name": "centralia-api",
+  "version": "0.1.0",
+  "description": "CentralIA backend - NestJS + Prisma + BullMQ",
+  "author": "GTECK",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/src/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio",
+    "seed": "ts-node prisma/seed.ts",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "seed:prod": "prisma migrate deploy && ts-node prisma/seed.ts",
+    "demo": "ts-node -r tsconfig-paths/register scripts/demo.ts",
+    "demo:all": "ts-node -r tsconfig-paths/register scripts/demo-all.ts",
+    "demo:prod": "ts-node -r tsconfig-paths/register prisma/demo-prod.ts",
+    "smoke": "ts-node -r tsconfig-paths/register scripts/smoke.ts",
+    "pilot:check": "ts-node -r tsconfig-paths/register scripts/pilot-check.ts",
+    "pilot:ispbox-readonly": "ts-node -r tsconfig-paths/register scripts/pilot-ispbox-readonly.ts",
+    "pilot:meta-send-test": "ts-node -r tsconfig-paths/register scripts/pilot-meta-send-test.ts"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0",
+    "@aws-sdk/client-s3": "^3.700.0",
+    "@bull-board/api": "^6.5.3",
+    "@bull-board/express": "^6.5.3",
+    "@nestjs/axios": "^4.0.0",
+    "@nestjs/bullmq": "^11.0.2",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-socket.io": "^11.0.1",
+    "@nestjs/schedule": "^6.0.0",
+    "@nestjs/swagger": "^11.4.3",
+    "@nestjs/throttler": "^6.4.0",
+    "@nestjs/websockets": "^11.0.1",
+    "@prisma/client": "^6.19.3",
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^5.34.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "helmet": "^8.1.0",
+    "ioredis": "^5.4.2",
+    "multer": "^2.0.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.0.0",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/supertest": "^6.0.2",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "prisma": "^6.19.3",
+    "socket.io-client": "^4.8.3",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3"
+  }
+}

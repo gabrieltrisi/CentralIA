@@ -1,0 +1,536 @@
+/* ============================================================
+   Identidade de SITE ChipNews — alta fidelidade a chipnews.com.br
+   Tema CLARO (conteúdo) + chrome/hero navy. Poppins, raios 1rem,
+   azul de marca, verde WhatsApp (CTA), amarelo (selo), sombras suaves.
+   ============================================================ */
+
+/* ---- ChipNewsButton (CTA) ---- */
+.cnbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-weight: 700; font-size: 14px; letter-spacing: 0.01em; line-height: 1;
+  padding: 13px 24px; border-radius: 30px; border: 1px solid transparent;
+  cursor: pointer; transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+.cnbtn--sm { padding: 9px 16px; font-size: 13px; border-radius: 22px; }
+.cnbtn--full { width: 100%; }
+/* CTA principal = verde WhatsApp do site */
+.cnbtn--cta { color: #fff; background: var(--gradient-whats); box-shadow: 0 8px 22px rgba(37, 211, 102, 0.32); }
+.cnbtn--cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37, 211, 102, 0.42); filter: saturate(1.05); }
+/* Primário = azul de marca */
+.cnbtn--primary { color: #fff; background: var(--gradient-primary); box-shadow: 0 8px 22px rgba(10, 102, 194, 0.28); }
+.cnbtn--primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(10, 102, 194, 0.4); }
+.cnbtn--outline { color: var(--primary); background: #fff; border-color: rgba(10, 102, 194, 0.45); }
+.cnbtn--outline:hover { background: rgba(10, 102, 194, 0.06); border-color: var(--primary); }
+.cnbtn--ghost { color: var(--muted); background: transparent; border-color: var(--border); }
+.cnbtn--ghost:hover { color: var(--text); border-color: var(--border-strong); background: var(--surface-3); }
+.cnbtn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ---- Hero (banner navy do site) ---- */
+.hero {
+  position: relative; overflow: hidden; border-radius: var(--radius-lg);
+  padding: 54px 48px; margin-bottom: 30px;
+  background:
+    radial-gradient(900px 400px at 6% -30%, rgba(37, 150, 190, 0.45), transparent 55%),
+    radial-gradient(760px 380px at 100% 0%, rgba(0, 123, 255, 0.32), transparent 52%),
+    linear-gradient(160deg, #0a2547 0%, #081f38 60%, #00305f 100%);
+  border: 1px solid rgba(37, 150, 190, 0.25);
+  box-shadow: var(--shadow-lg);
+  color: #fff;
+}
+.hero--compact { padding: 34px 34px; }
+.hero__glow {
+  position: absolute; inset: auto -120px -160px auto; width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(37, 150, 190, 0.3), transparent 70%); pointer-events: none;
+}
+.hero__content { position: relative; z-index: 1; }
+.hero__logo { height: 46px; width: auto; display: block; margin-bottom: 18px; filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.3)); }
+.hero__eyebrow {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
+  padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08); margin-bottom: 18px;
+}
+.hero__title {
+  font-size: 46px; line-height: 1.05; font-weight: 900; letter-spacing: -0.025em;
+  margin: 0 0 14px; color: #fff; max-width: 18ch;
+}
+.hero__title .grad {
+  background: linear-gradient(100deg, #ffe14c, #fff04c);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero__sub { font-size: 17px; color: rgba(234, 242, 251, 0.82); margin: 0 0 24px; max-width: 60ch; line-height: 1.55; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---- SiteSection (cabeçalho de seção, conteúdo claro) ---- */
+.site-section { margin: 38px 0; }
+.site-section__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+.site-section__title { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; color: var(--main); }
+.site-section__sub { color: var(--muted); font-size: 14px; margin: 5px 0 0; }
+
+/* ---- FeatureCard (usado na coluna navy do login) ---- */
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.feature-card {
+  border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); padding: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+.feature-card:hover { border-color: rgba(37, 150, 190, 0.5); transform: translateY(-2px); background: rgba(255, 255, 255, 0.1); }
+.feature-card__icon {
+  width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 10px;
+  color: #fff; background: rgba(37, 150, 190, 0.22); font-size: 18px;
+}
+.feature-card__title { font-weight: 700; font-size: 14px; color: #fff; }
+.feature-card__text { color: rgba(234, 242, 251, 0.7); font-size: 12px; margin: 4px 0 0; line-height: 1.45; }
+
+/* ---- BigMetricCard (card claro com número grande) ---- */
+.big-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.big-metric {
+  position: relative; overflow: hidden; border-radius: var(--radius); padding: 24px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.big-metric:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.big-metric::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 5px; }
+.big-metric--primary::after { background: var(--primary); }
+.big-metric--cyan::after { background: var(--cerulean); }
+.big-metric--amber::after { background: var(--warning); }
+.big-metric--red::after { background: var(--danger); }
+.big-metric__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.big-metric__icon { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; color: var(--primary); background: rgba(10, 102, 194, 0.1); }
+.big-metric--cyan .big-metric__icon { color: var(--cerulean); background: rgba(37, 150, 190, 0.12); }
+.big-metric--amber .big-metric__icon { color: var(--warning); background: rgba(224, 138, 0, 0.12); }
+.big-metric--red .big-metric__icon { color: var(--danger); background: rgba(213, 0, 0, 0.1); }
+.big-metric__cta { font-size: 11.5px; font-weight: 700; color: var(--primary); }
+.big-metric__value { font-size: 46px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; color: var(--main); }
+.big-metric__label { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 10px; }
+.big-metric__hint { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+
+/* ---- OperationCard (blocos grandes do dashboard) ---- */
+.op-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.op-card {
+  border-radius: var(--radius); padding: 26px; border: 1px solid var(--border);
+  background: var(--surface); box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 12px; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.op-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(10, 102, 194, 0.3); }
+.op-card__icon { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; color: #fff; background: var(--gradient-primary); box-shadow: 0 6px 16px rgba(10, 102, 194, 0.28); }
+.op-card--cyan .op-card__icon { background: linear-gradient(135deg, #2596be, #128c7e); box-shadow: 0 6px 16px rgba(37, 150, 190, 0.28); }
+.op-card--amber .op-card__icon { background: linear-gradient(135deg, #f59e0b, #e08a00); box-shadow: 0 6px 16px rgba(224, 138, 0, 0.28); }
+.op-card--green .op-card__icon { background: var(--gradient-whats); box-shadow: 0 6px 16px rgba(37, 211, 102, 0.28); }
+.op-card__title { font-size: 20px; font-weight: 800; margin: 4px 0 0; color: var(--main); }
+.op-card__desc { color: var(--muted); font-size: 13.5px; margin: 0; flex: 1; line-height: 1.55; }
+.op-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+
+/* ---- IntegrationStatusCard (card claro) ---- */
+.int-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+.int-card { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+.int-card__icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: var(--primary); background: rgba(10, 102, 194, 0.1); }
+.int-card__name { font-weight: 700; font-size: 13px; color: var(--text); }
+.int-card__status { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); text-transform: capitalize; margin-top: 2px; }
+.int-card__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.int-card--ok .int-card__dot { background: var(--success); box-shadow: 0 0 8px var(--success); }
+.int-card--sandbox .int-card__dot { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+.int-card--off .int-card__dot { background: var(--danger); }
+
+/* ---- PlanLikeCard (cards de plano do site: branco, velocidade e preço gigantes) ---- */
+.plan-like-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; align-items: stretch; }
+.plan-like {
+  position: relative; border-radius: var(--radius-lg); padding: 30px 24px 24px; text-align: center;
+  background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 6px; transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.plan-like:hover { transform: translateY(-6px); border-color: rgba(10, 102, 194, 0.4); box-shadow: var(--shadow-lg); }
+/* plano recomendado em destaque (escala maior + borda cerúleo) */
+.plan-like--rec { border: 2px solid var(--cerulean); box-shadow: 0 16px 40px rgba(37, 150, 190, 0.22); transform: translateY(-6px) scale(1.02); }
+.plan-like--rec:hover { transform: translateY(-10px) scale(1.02); }
+.plan-like--off { opacity: 0.5; }
+.plan-like__ribbon {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 6px 16px; border-radius: 999px; color: #fff; background: linear-gradient(45deg, #ff2d2d, #d50000); box-shadow: 0 6px 16px rgba(213, 0, 0, 0.4); white-space: nowrap;
+}
+.plan-like__name { font-size: 16px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary); }
+.plan-like__speed {
+  font-size: 38px; font-weight: 900; line-height: 1; letter-spacing: -0.02em; color: var(--main); margin: 6px 0 2px;
+}
+.plan-like__speed .unit { font-size: 16px; font-weight: 800; color: var(--cerulean); margin-left: 4px; letter-spacing: 0; }
+.plan-like__price { margin: 12px 0 2px; display: flex; align-items: baseline; justify-content: center; gap: 2px; }
+.plan-like__cents {
+  font-size: 34px; font-weight: 900; letter-spacing: -0.02em; color: var(--main);
+}
+.plan-like__mo { font-size: 13px; color: var(--muted); margin-left: 3px; }
+.plan-like__tag {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; color: #0b7a4f;
+  border: 1px solid rgba(28, 140, 74, 0.3); border-radius: 999px; padding: 5px 12px; width: fit-content; margin: 8px auto 6px;
+  background: rgba(28, 140, 74, 0.08);
+}
+.plan-like__tag.is-promo { color: #b8860b; border-color: rgba(255, 240, 76, 0.7); background: rgba(255, 240, 76, 0.22); }
+.plan-like__feats { list-style: none; padding: 0; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.plan-like__feats li { font-size: 13px; color: var(--text); padding-left: 24px; position: relative; line-height: 1.4; }
+.plan-like__feats li::before {
+  content: '\2713'; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%;
+  display: inline-grid; place-items: center; font-size: 10px; color: #fff; background: var(--whats); font-weight: 900;
+}
+.plan-like__foot { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 16px; }
+.plan-like__state { align-self: center; }
+
+/* ---- SiteLikeHeader (header claro) ---- */
+.sitehead { gap: 18px; }
+.sitehead__nav { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; overflow: hidden; }
+.sitehead__nav a {
+  padding: 8px 14px; border-radius: 999px; color: var(--muted); font-weight: 600; font-size: 13.5px; white-space: nowrap;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.sitehead__nav a:hover { color: var(--text); background: var(--surface-3); }
+.sitehead__nav a.is-active { color: var(--primary); background: rgba(10, 102, 194, 0.1); box-shadow: inset 0 0 0 1px rgba(10, 102, 194, 0.28); }
+.sitehead__right { display: flex; align-items: center; gap: 12px; }
+.statuspill { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); }
+.statuspill.is-on { color: var(--success); background: rgba(28, 140, 74, 0.08); border-color: rgba(28, 140, 74, 0.28); }
+.statuspill.is-off { color: var(--muted); }
+.statuspill__dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.modepill { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 5px 10px; border-radius: 999px; }
+.modepill.is-sandbox { color: #b8860b; background: rgba(255, 240, 76, 0.25); }
+.modepill.is-prod { color: var(--success); background: rgba(28, 140, 74, 0.12); }
+.sitehead__user { display: flex; align-items: center; gap: 9px; }
+.avatar--sm { width: 34px; height: 34px; font-size: 13px; }
+.sitehead__umeta { display: flex; flex-direction: column; line-height: 1.1; }
+.sitehead__umeta strong { font-size: 13px; color: var(--text); }
+.sitehead__umeta small { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Topbar mobile (hambúrguer + marca) */
+.mobile-topbar {
+  display: none; align-items: center; gap: 12px;
+}
+.hamburger {
+  width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--surface-3); border: 1px solid var(--border); color: var(--main);
+}
+.hamburger:hover { background: #e3e9f1; }
+
+@media (max-width: 1080px) { .sitehead__nav { display: none; } }
+@media (max-width: 980px) {
+  .mobile-topbar { display: flex; }
+}
+@media (max-width: 720px) { .sitehead__umeta { display: none; } .sitehead .statuspill { display: none; } }
+/* Mobile: enxuga o header para caber (evita overflow horizontal da página). */
+@media (max-width: 560px) {
+  .sitehead .modepill { display: none; }
+  .sitehead__right { gap: 8px; }
+  .mobile-topbar .brandmark__sub { display: none; }
+}
+
+/* ---- Login landing (espelha a landing do site) ---- */
+.login-landing {
+  min-height: 100vh; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 0;
+  align-items: stretch;
+  background: var(--background);
+}
+.login-hero {
+  position: relative; overflow: hidden;
+  padding: 56px clamp(28px, 5vw, 72px);
+  display: flex; flex-direction: column; justify-content: center;
+  background:
+    radial-gradient(820px 420px at 10% 0%, rgba(37, 150, 190, 0.4), transparent 55%),
+    radial-gradient(720px 420px at 100% 100%, rgba(0, 123, 255, 0.3), transparent 52%),
+    linear-gradient(160deg, #0a2547 0%, #081f38 60%, #00305f 100%);
+  color: #fff;
+}
+.login-hero__logo { height: 60px; width: auto; display: block; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35)); }
+.login-hero__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; opacity: 0.92; margin-bottom: 18px; }
+.login-hero__title { font-size: clamp(34px, 4.4vw, 54px); line-height: 1.04; font-weight: 900; letter-spacing: -0.03em; color: #fff; margin: 0 0 18px; max-width: 16ch; }
+.login-hero__title .grad { background: linear-gradient(100deg, #ffe14c, #fff04c); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.login-hero__sub { font-size: 17px; color: rgba(234, 242, 251, 0.84); line-height: 1.55; max-width: 48ch; margin: 0 0 30px; }
+.login-hero__feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 480px; }
+.login-right { display: flex; justify-content: center; align-items: center; padding: 48px clamp(20px, 4vw, 56px); }
+@media (max-width: 920px) {
+  .login-landing { grid-template-columns: 1fr; }
+  .login-hero { padding: 44px 24px; }
+  .login-hero__feats { max-width: none; }
+  .login-right { padding: 32px 20px 48px; }
+}
+
+/* Card de login claro (à direita) */
+.login-card {
+  width: 100%; max-width: 420px;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+  padding: 34px 30px;
+}
+/* Card de login minimalista (sem bloco de marca — a logo fica só no painel esquerdo). */
+.login-title { text-align: center; font-size: 30px; font-weight: 900; letter-spacing: -0.02em; color: var(--main); margin: 2px 0 6px; }
+.login-subtitle { text-align: center; color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 18px; }
+.login-seal {
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+  margin: 0 auto 18px; padding: 7px 12px; width: fit-content;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--surface-3);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted);
+}
+.login-seal span { color: var(--text); }
+.login-seal i { color: var(--success); font-style: normal; }
+
+.mb-18 { margin-bottom: 18px; }
+
+/* ============================================================
+   Conversas — estilo WhatsApp Business / Intercom (tema claro)
+   ============================================================ */
+.conv-screen { gap: 18px; }
+.conv-col { background: var(--surface); box-shadow: var(--shadow); border-radius: var(--radius); }
+
+/* Lista de conversas */
+.conv-item { transition: background 0.12s ease, border-color 0.12s ease; }
+.conv-item:hover { background: var(--surface-3); }
+.conv-item.active {
+  background: rgba(10, 102, 194, 0.08);
+  border-color: rgba(10, 102, 194, 0.3);
+}
+.conv-item__name { color: var(--text); }
+
+/* Cabeçalho do chat com avatar + status */
+.chat__header { background: var(--surface); gap: 12px; }
+.chat-peer { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.chat-peer__avatar {
+  position: relative; width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center; font-weight: 800; font-size: 16px; color: #fff;
+  background: var(--gradient-primary);
+}
+.chat-peer__avatar .dot {
+  position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--whats); border: 2px solid #fff;
+}
+.chat-peer__meta { min-width: 0; line-height: 1.2; }
+.chat-peer__name { font-weight: 800; font-size: 15px; color: var(--main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-peer__sub { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+/* Corpo do chat: fundo sutil tipo WhatsApp */
+.chat__body { background: #eef1f6; }
+
+/* Separador de data na timeline */
+.day-sep { align-self: center; margin: 6px 0; }
+.day-sep span {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 3px 12px; box-shadow: var(--shadow);
+}
+
+/* Bolhas estilo WhatsApp (entrada cinza, saída verde-claro) */
+.bubble { box-shadow: 0 1px 1px rgba(8, 31, 56, 0.08); }
+.bubble--customer { background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--cerulean); color: var(--text); }
+.bubble--agent { background: #d9fdd3; border: 1px solid rgba(28, 140, 74, 0.25); border-left: 3px solid var(--whats); color: #0c2a16; }
+.bubble--ai { background: #e3f0ff; border: 1px solid rgba(10, 102, 194, 0.25); border-left: 3px solid var(--primary); color: #0e2236; }
+.bubble--system { color: var(--muted); }
+.bubble__meta { color: rgba(14, 34, 54, 0.55); }
+
+/* Painel do cliente — cabeçalho com avatar e tags */
+.cust-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 18px 16px; border-bottom: 1px solid var(--border); }
+.cust-head__avatar { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 24px; color: #fff; background: var(--gradient-primary); box-shadow: var(--glow); }
+.cust-head__name { font-weight: 800; font-size: 16px; color: var(--main); }
+.cust-head__tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 2px; }
+.composer-wrap { background: var(--surface); }
+
+/* ============================================================
+   Sprint 17 — Copilot do atendente (Resumo da IA + Sugerir)
+   ============================================================ */
+.panel-section.copilot { background: linear-gradient(160deg, rgba(10, 102, 194, 0.05), rgba(37, 150, 190, 0.04)); }
+.copilot__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.copilot__head h4 { margin: 0; }
+.copilot__actions { display: flex; gap: 4px; }
+.copilot__btn { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: var(--main); font-size: 14px; line-height: 1; }
+.copilot__btn:hover:not(:disabled) { background: var(--surface-3); }
+.copilot__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.copilot__body { display: flex; flex-direction: column; gap: 9px; }
+.copilot__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.copilot__situation { font-size: 13px; color: var(--text); margin: 0; font-weight: 600; line-height: 1.4; }
+.copilot__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.copilot__chip { font-size: 11px; font-weight: 700; color: var(--primary); background: rgba(10, 102, 194, 0.08); border: 1px solid rgba(10, 102, 194, 0.2); border-radius: 999px; padding: 3px 9px; }
+.copilot__line span { color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; font-weight: 700; display: block; }
+.copilot__line strong { color: var(--text); font-weight: 600; font-size: 12.5px; }
+.copilot__line--pending strong { color: var(--warning); }
+.copilot__next { background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: 10px; padding: 8px 11px; }
+.copilot__next span { color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; font-weight: 700; }
+.copilot__next p { margin: 2px 0 0; font-size: 12.5px; color: var(--text); line-height: 1.45; }
+.urgency { font-size: 10.5px; font-weight: 800; padding: 2px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; }
+.urgency--low { color: var(--muted); background: rgba(148, 163, 184, 0.16); }
+.urgency--normal { color: var(--primary); background: rgba(10, 102, 194, 0.1); }
+.urgency--high { color: #8a6d00; background: rgba(255, 240, 76, 0.3); }
+.urgency--urgent { color: #fff; background: var(--danger); }
+.composer-suggest { padding: 8px 12px 0; }
+
+/* ============================================================
+   Ajustes responsivos finais (375 / 768 / 1024)
+   ============================================================ */
+@media (max-width: 980px) {
+  .shell__header { padding: 0 16px; }
+  .hero { padding: 36px 24px; border-radius: var(--radius); }
+  .hero__title { font-size: 34px; }
+  .site-section { margin: 28px 0; }
+  .site-section__title { font-size: 22px; }
+}
+/* ============================================================
+   Sprint 14 — Human Queue Kanban operacional (estilo ChipNews)
+   ============================================================ */
+
+/* Toggle Lista/Kanban (segmentado) */
+.view-toggle { display: inline-flex; padding: 4px; gap: 4px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 999px; }
+.view-toggle__btn {
+  border: 0; background: transparent; color: var(--muted); font-weight: 700; font-size: 13px;
+  padding: 8px 16px; border-radius: 999px; transition: all 0.15s ease;
+}
+.view-toggle__btn:hover { color: var(--text); }
+.view-toggle__btn.is-active { color: #fff; background: var(--gradient-primary); box-shadow: 0 4px 12px rgba(10, 102, 194, 0.28); }
+/* Legenda da visualização atual + contador de resultados (itens 4/5) */
+.view-toggle-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+.view-toggle__cap { font-size: 12.5px; color: var(--muted); font-weight: 600; }
+.view-toggle__cap strong { color: var(--main); }
+.result-count { font-size: 13px; color: var(--muted); margin: -6px 0 14px; }
+.result-count strong { color: var(--main); font-size: 15px; }
+
+/* Quadro: colunas com rolagem horizontal */
+.kanban {
+  display: flex; gap: 16px; align-items: flex-start;
+  overflow-x: auto; padding: 4px 2px 16px; scroll-snap-type: x proximity;
+}
+.kbcol {
+  flex: 0 0 300px; width: 300px; max-height: calc(100vh - 300px); min-height: 220px;
+  display: flex; flex-direction: column; scroll-snap-align: start;
+  background: var(--surface-3); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.kbcol__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 14px 16px; border-bottom: 1px solid var(--border); border-top: 3px solid var(--cerulean);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.kbcol--new .kbcol__head { border-top-color: var(--cerulean); }
+.kbcol--in_progress .kbcol__head { border-top-color: var(--primary); }
+.kbcol--waiting_client .kbcol__head { border-top-color: var(--warning); }
+.kbcol--waiting_tech .kbcol__head { border-top-color: #7c3aed; }
+.kbcol--finance .kbcol__head { border-top-color: var(--whats-2); }
+.kbcol--resolved .kbcol__head { border-top-color: var(--muted); }
+.kbcol__titles { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.kbcol__title { font-weight: 800; font-size: 14px; color: var(--main); }
+.kbcol__hint { font-size: 11px; color: var(--muted); }
+.kbcol__count {
+  flex-shrink: 0; min-width: 26px; height: 24px; padding: 0 8px; border-radius: 999px;
+  display: grid; place-items: center; font-size: 12px; font-weight: 800;
+  color: var(--main); background: #fff; border: 1px solid var(--border);
+}
+.kbcol__body { overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.kbcol__empty { text-align: center; color: var(--muted); font-size: 12.5px; padding: 22px 8px; border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); }
+
+/* Card de handoff */
+.kbcard {
+  position: relative; background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--muted);
+  border-radius: 12px; padding: 14px; box-shadow: var(--shadow); cursor: pointer;
+  display: flex; flex-direction: column; gap: 8px; transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.kbcard:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.kbcard:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.kbcard--on_time { border-left-color: var(--success); }
+.kbcard--due_soon { border-left-color: var(--warning); }
+.kbcard--overdue { border-left-color: var(--danger); }
+.kbcard--resolved { border-left-color: var(--muted); opacity: 0.92; }
+.kbcard__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.kbcard__name { font-weight: 800; font-size: 14px; color: var(--main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kbcard__phone { font-size: 12px; color: var(--muted); }
+.kbcard__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.kbcard__summary { font-size: 12.5px; color: var(--text); margin: 0; line-height: 1.45; }
+.kbcard__hint { display: flex; flex-direction: column; gap: 2px; font-size: 11px; padding: 6px 8px; background: rgba(10, 102, 194, 0.05); border-radius: 8px; border-left: 2px solid var(--primary); }
+.kbcard__hint-next { color: var(--main); font-weight: 600; }
+.kbcard__hint-pending { color: var(--warning); font-weight: 700; font-size: 10.5px; }
+.kbcard__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.kbcard__wait { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+.kbcard__assignee { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text); font-weight: 600; }
+.kbcard__avatar { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: #fff; background: var(--gradient-primary); }
+.kbcard__actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.kbcard__actions .cnbtn { flex: 1; min-width: 72px; }
+
+@media (max-width: 980px) {
+  .kbcol { flex-basis: 82vw; width: 82vw; max-width: 320px; max-height: none; }
+  .view-toggle__btn { padding: 8px 13px; }
+}
+/* Mobile: cabeçalho quebra para o toggle Lista/Kanban ficar sempre visível. */
+@media (max-width: 640px) {
+  .page-header { flex-wrap: wrap; align-items: flex-start; }
+  .view-toggle { width: 100%; }
+  .view-toggle__btn { flex: 1; }
+}
+
+/* ============================================================
+   Sprint 15.1 — telas de detalhe (ticket/cliente)
+   ============================================================ */
+.detail-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px; align-items: start; margin-bottom: 16px;
+}
+.kv__wrap { white-space: normal; word-break: break-word; text-align: right; }
+.link-cell { color: var(--primary); font-weight: 700; }
+.link-cell:hover { text-decoration: underline; }
+.event-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.event-list li { display: flex; gap: 10px; align-items: flex-start; }
+.event-list__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--primary); margin-top: 5px; flex-shrink: 0; }
+.event-list strong { font-size: 13px; }
+.event-list small { display: block; color: var(--muted); font-size: 11px; }
+
+/* ============================================================
+   Sprint 15.1 (item 2) — Conversas: painel mais confortável,
+   sem truncamento agressivo; aproveitar monitores grandes.
+   ============================================================ */
+.conv-screen { grid-template-columns: 300px minmax(0, 1fr) 340px; }
+@media (min-width: 1600px) {
+  .conv-screen { grid-template-columns: 320px minmax(0, 1fr) 400px; gap: 20px; }
+}
+/* valores do painel quebram linha em vez de truncar ("Su...", "FI...", "A...") */
+.conv-col .panel-section .kv { align-items: flex-start; }
+.conv-col .panel-section .kv span:last-child { white-space: normal; overflow: visible; text-overflow: clip; }
+.conv-col .panel-section .kv .badge,
+.conv-col .panel-section .kv .sla,
+.conv-col .panel-section .kv .intent-badge { white-space: normal; height: auto; }
+
+/* ============================================================
+   BUG-04 / item 2 — Conversas no mobile: foco no chat + abas
+   ============================================================ */
+.chat__back { display: none; }
+.conv-tabs { display: none; }
+.conv-tabs__btn {
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  font-weight: 700; font-size: 13px; padding: 10px; border-radius: 999px;
+}
+.conv-tabs__btn.is-active { color: #fff; background: var(--gradient-primary); border-color: transparent; }
+
+/* Tablet empilhado (901–1100px): limita a altura da lista para o chat
+   ficar acessível logo abaixo sem rolar uma lista longa. */
+@media (min-width: 901px) and (max-width: 1100px) {
+  .conv-screen > .conv-col--list .conv-col__body { max-height: 46vh; }
+}
+
+/* Mobile (≤900px): navegação tipo app — uma tela por vez. */
+@media (max-width: 900px) {
+  /* botão Voltar no cabeçalho do chat */
+  .chat__back {
+    display: inline-grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0;
+    margin-right: 2px; border-radius: 12px; border: 1px solid var(--border);
+    background: var(--surface-3); color: var(--main);
+  }
+  .chat__back:hover { background: #e3e9f1; }
+  /* sem conversa selecionada: mostra só a lista (esconde placeholders) */
+  .conv-screen:not(.has-selection) .conv-col:not(.conv-col--list) { display: none; }
+  /* com conversa selecionada: layout em coluna (flex) p/ a barra de abas ficar
+     compacta e a coluna ativa preencher o restante. */
+  .conv-screen.has-selection {
+    display: flex; flex-direction: column; min-height: calc(100vh - 150px);
+  }
+  .conv-screen.has-selection .conv-col--list { display: none; }
+  .conv-screen.has-selection .conv-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; flex: 0 0 auto; }
+  .conv-screen.has-selection .conv-col { flex: 1 1 auto; min-height: 0; }
+  .conv-screen.has-selection.tab-chat .conv-col--panel { display: none; }
+  .conv-screen.has-selection.tab-client .conv-col--chat { display: none; }
+}
+@media (max-width: 520px) {
+  .hero { padding: 28px 20px; }
+  .hero__title { font-size: 28px; max-width: none; }
+  .hero__sub { font-size: 15px; }
+  .hero__actions { display: grid; grid-template-columns: 1fr; }
+  .big-metric__value { font-size: 38px; }
+  .plan-like-grid { grid-template-columns: 1fr; }
+}

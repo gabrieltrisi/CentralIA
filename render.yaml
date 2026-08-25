@@ -1,0 +1,64 @@
+# Render — Web Service da API CentralIA (NestJS).
+# Secrets ficam com `sync: false` (definidos no painel do Render — NUNCA no repositório).
+services:
+  - type: web
+    name: centralia-api
+    runtime: node
+    rootDir: api
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    # --include=dev garante o @nestjs/cli (nest build) mesmo com NODE_ENV=production.
+    buildCommand: npm install --include=dev && npx prisma generate && npm run build && npx prisma migrate deploy
+    startCommand: npm run start:prod
+    autoDeploy: true
+    envVars:
+      # ---- Não-secretos ----
+      - key: NODE_ENV
+        value: production
+      - key: APP_MODE
+        value: sandbox
+      - key: USE_FSM
+        value: "false"
+      - key: ISPBOX_ENABLED
+        value: "false"
+      - key: STORAGE_DRIVER
+        value: local
+      - key: ALLOW_LOCAL_STORAGE_IN_PRODUCTION
+        value: "false"
+      - key: PILOT_MODE
+        value: "true"
+      - key: PILOT_ALLOWED_PHONES
+        value: "5571991674248"
+      - key: META_WEBHOOK_SIGNATURE_BYPASS
+        value: "false"
+      - key: DEFAULT_COMPANY_NAME
+        value: CentralIA
+      # PORT é injetada automaticamente pelo Render (a app lê process.env.PORT).
+      # ---- Secretos / por ambiente (definir no painel do Render) ----
+      - key: FRONTEND_URL          # https://SEU-FRONTEND.vercel.app
+        sync: false
+      - key: DATABASE_URL          # Neon (sslmode=require)
+        sync: false
+      - key: REDIS_URL             # Upstash (rediss://...)
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_REFRESH_SECRET
+        sync: false
+      - key: ATTACHMENT_SIGNING_SECRET
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
+      - key: META_VERIFY_TOKEN
+        sync: false
+      - key: META_PHONE_NUMBER_ID
+        sync: false
+      - key: META_ACCESS_TOKEN
+        sync: false
+      - key: BULL_BOARD_USER
+        sync: false
+      - key: BULL_BOARD_PASSWORD
+        sync: false

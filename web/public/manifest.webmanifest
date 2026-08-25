@@ -1,0 +1,14 @@
+{
+  "name": "ChipNews CentralIA",
+  "short_name": "CentralIA",
+  "description": "Central de Atendimento Inteligente da ChipNews.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#003366",
+  "theme_color": "#003366",
+  "icons": [
+    { "src": "/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
